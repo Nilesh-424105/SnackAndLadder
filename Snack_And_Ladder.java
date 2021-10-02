@@ -2,17 +2,20 @@ package com.bridgelabz;
 
 public class Snack_And_Ladder {
 	public static void main(String[] args) {
-		System.out.println("Player Exact Winning Position is: ");
+		System.out.println("Report Dice Count: ");
 
 		// Declared Constants and Assigning variables
 		int NO_PLAY = 0;
 		int is_Ladder = 1;
 		int is_Snake = 2;
 		int WINNING_POSITION = 100;
-		int position = 0; // Initializing Variable
+
+		// Declairing and Initializing Variable
+		int position = 0, diceRollCount = 0;
 
 		// while loop use to execute Condition
 		while (position < WINNING_POSITION) {
+			diceRollCount++;
 
 			// to roll a dice
 			int diceNumber = (int) Math.floor(Math.random() * 10) % 6 + 1;
@@ -48,6 +51,7 @@ public class Snack_And_Ladder {
 			}
 
 		}
+		System.out.println("Total dice count = " + diceRollCount);
 	}
 
 }
