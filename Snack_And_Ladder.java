@@ -1,57 +1,75 @@
 package com.bridgelabz;
 
 public class Snack_And_Ladder {
+	// Declared Constants Assigning Variables
+	static final int WINNING_POSITION = 100;
+	static final int IS_LADDER = 1;
+	static final int IS_SNAKE = 0;
+
+	static String turn = "player1";
+
 	public static void main(String[] args) {
-		System.out.println("Report Dice Count: ");
+		System.out.println("Game With Player2: ");
+		// Declaring and Initializing
+		int diceCount = 0;
+		int player1Position = 0;
+		int player2Position = 0;
+		int player1DiceCount = 0;
+		int player2DiceCount = 0;
 
-		// Declared Constants and Assigning variables
-		int NO_PLAY = 0;
-		int is_Ladder = 1;
-		int is_Snake = 2;
-		int WINNING_POSITION = 100;
-
-		// Declairing and Initializing Variable
-		int position = 0, diceRollCount = 0;
-
-		// while loop use to execute Condition
-		while (position < WINNING_POSITION) {
-			diceRollCount++;
-
-			// to roll a dice
-			int diceNumber = (int) Math.floor(Math.random() * 10) % 6 + 1;
-			System.out.println("diceNumber is : " + diceNumber);
-
-			// check option after getting a diceNumber
-			int option = (int) Math.floor(Math.random() * 10) % 2;
-			System.out.println("selected player option : " + option);
-
-			switch (option) {
-			case 1:
-				position = diceNumber + position;
-				System.out.println("Ladder");
-				if (position > 100) {
-					position = 100;
-					position = position - diceNumber;
-				}
-				System.out.println("position for the player after the ladder is : " + position);
-				break;
-
-			case 2:
-				position = position - diceNumber;
-				System.out.println("Snack");
-				if (position < 0) {
-					position = 0;
-					System.out.println("Player restart from zero: ");
-				}
-				System.out.println("position for the player after the Snake is : " + position);
-				break;
-
-			default:
-				System.out.println("No play");
+		while (player1Position < WINNING_POSITION && player2Position < WINNING_POSITION) {
+			++diceCount;
+			if (turn.equals("player1")) {
+				turn = "player2";
+				++player1DiceCount;
+				player1Position = getPosition(player2Position);
+			} else {
+				++player2DiceCount;
+				turn = "player1";
+				player2Position = getPosition(player2Position);
 			}
+		}
+
+		if (player1Position == WINNING_POSITION) {
+			System.out.println("player1 dice count " + player1DiceCount);
+			System.out.println("player1 win the game");
+
+		} else {
+			System.out.println("player2 dice count " + player2DiceCount);
+			System.out.println("player2 win the game");
 
 		}
-		System.out.println("Total dice count = " + diceRollCount);
+		System.out.println("Total dice count " + diceCount);
+		System.out.println("player1 position is " + player1Position);
+		System.out.println("player2 position is " + player2Position);
+
+	}
+
+	private static int getPosition(int position) {
+		int diceNumber = (int) Math.floor(Math.random() * 10) % 6 + 1;
+		System.out.println("diceNumber is : " + diceNumber);
+		int option = (int) Math.floor(Math.random() * 10) % 2;
+		System.out.println("selected player option : " + option);
+
+		if (option == IS_SNAKE) {
+			System.out.println("Snake for the Player");
+			if (position - diceNumber > 0) {
+				position = position - diceNumber;
+
+			}
+		} else if (option == IS_LADDER) {
+			System.out.println("Ladder for the Player");
+			if (turn.equals("player1")) {
+				turn = "player1";
+			} else if (turn.equals("player2")) {
+				turn = "player2";
+			}
+			if (position + diceNumber <= 100) {
+				position = position + diceNumber;
+
+			}
+		}
+		return position;
 	}
 
 }
